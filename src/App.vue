@@ -1,20 +1,22 @@
 <template>
   <div>
-    <v-header :seller="seller"></v-header>
-    <div class="tab border-1px">
-      <div class="tab-item">
-        <router-link to="/goods">商品</router-link>
+    <template v-if="showHeader">
+      <v-header :seller="seller"></v-header>
+      <div class="tab border-1px">
+        <div class="tab-item">
+          <router-link to="/goods">商品</router-link>
+        </div>
+        <div class="tab-item">
+          <router-link to="/ratings">评论</router-link>
+        </div>
+        <div class="tab-item">
+          <router-link to="/seller">商家</router-link>
+        </div>
       </div>
-      <div class="tab-item">
-        <router-link to="/ratings">评论</router-link>
-      </div>
-      <div class="tab-item">
-        <router-link to="/seller">商家</router-link>
-      </div>
-    </div>
-    <keep-alive>
-      <router-view :seller="seller"></router-view>
-    </keep-alive>
+    </template>
+    
+    <router-view :seller="seller" :showHeader="showHeader"></router-view>
+
   </div>
 </template>
 
@@ -32,10 +34,26 @@
             let queryParam = urlParse();
             return queryParam.id;
           })()
-        }
+        },
+        showHeader: true
       };
     },
+    methods: {
+      changeHash() {
+        if (window.location.hash.indexOf('payment') > -1) {
+          this.showHeader = false;
+        } else {
+          this.showHeader = true;
+        }
+      }
+    },
     created() {
+      this.changeHash();
+      window.addEventListener('hashchange', () => {
+        console.log('hash is change');
+        this.changeHash();
+      });
+      console.log('haha', this);
       this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
         response = response.body;
         if (response.errno === ERR_OK) {

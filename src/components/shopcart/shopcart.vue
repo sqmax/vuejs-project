@@ -72,6 +72,9 @@
           ];
         }
       },
+      seller: {
+        type: Object
+      },
       deliveryPrice: {
         type: Number,
         default: 0
@@ -186,7 +189,10 @@
         if (this.totalPrice < this.minPrice) {
           return;
         }
-        window.alert(`支付${this.totalPrice}元`);
+        window.localStorage.setItem('selectedGoods', JSON.stringify(this.selectFoods));
+        window.localStorage.setItem('seller_pay', JSON.stringify(this.seller));
+        console.log('selectFoods', this.selectFoods);
+        window.location.href = '#/payment';
       },
       addFood(target) {
         this.drop(target);

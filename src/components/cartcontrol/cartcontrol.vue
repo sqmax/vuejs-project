@@ -12,14 +12,18 @@
 
 <script type="text/ecmascript-6">
   import Vue from 'vue';
-
+  
   export default {
     props: {
       food: {
         type: Object
       }
     },
+    mounted() {
+      console.log(this.food);
+    },
     methods: {
+
       addCart(event) {
         if (!event._constructed) {
           return;
@@ -29,7 +33,7 @@
         } else {
           this.food.count++;
         }
-        this.$emit('add', event.target);
+        this.$emit('add', event.target, this.food);
       },
       decreaseCart(event) {
         if (!event._constructed) {

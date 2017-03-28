@@ -39,10 +39,10 @@
           </li>
         </ul>
       </div>
-      <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
-                :minPrice="seller.minPrice"></shopcart>
+      <shopcart ref="shopcart" :selectFoods="selectFoods"  :deliveryPrice="seller.deliveryPrice"
+                :minPrice="seller.minPrice" :seller="seller"></shopcart>
     </div>
-    <food @add="addFood" :food="selectedFood" ref="food"></food>
+    <food @add="addFood" :food="selectedFood"  ref="food"></food>
   </div>
 </template>
 
@@ -51,7 +51,6 @@
   import shopcart from 'components/shopcart/shopcart';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
   import food from 'components/food/food';
-
   const ERR_OK = 0;
 
   export default {
@@ -62,6 +61,7 @@
     },
     data() {
       return {
+        selectedFoods: {},
         goods: [],
         listHeight: [],
         scrollY: 0,
@@ -92,12 +92,28 @@
       }
     },
     created() {
+      console.log('ggggg', this.goods);
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-
+      let selectedGoods = window.localStorage.getItem('selectedGoods');
+      selectedGoods = selectedGoods ? JSON.parse(selectedGoods) : [];
       this.$http.get('/api/goods').then((response) => {
         response = response.body;
         if (response.errno === ERR_OK) {
+          selectedGoods.map(item => {
+            response.data.map((food, index) => {
+              console.log(food);
+              food.foods.map((foods, i) => {
+                // console.log(foods, item);
+                if (foods.id === item.id) {
+                  food.foods.splice(i, 1, Object.assign(food.foods[i], {count: item.count}));
+                  // food.foods[i].count = item.count;
+                  response.data.splice(index, 1, food);
+                }
+              });
+            });
+          });
           this.goods = response.data;
+          console.log('hello world', this.goods);
           this.$nextTick(() => {
             this._initScroll();
             this._calculateHeight();
@@ -121,7 +137,8 @@
         this.selectedFood = food;
         this.$refs.food.show();
       },
-      addFood(target) {
+      addFood(target, food) {
+        console.log('oh yeah this food', food);
         this._drop(target);
       },
       _drop(target) {
