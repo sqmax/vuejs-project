@@ -189,9 +189,8 @@
         if (this.totalPrice < this.minPrice) {
           return;
         }
-        window.localStorage.setItem('selectedGoods', JSON.stringify(this.selectFoods));
-        window.localStorage.setItem('seller_pay', JSON.stringify(this.seller));
-        console.log('selectFoods', this.selectFoods);
+        window.selectedGoods = JSON.stringify(this.selectFoods);
+        window.sellerPay = JSON.stringify(this.seller);
         window.location.href = '#/payment';
       },
       addFood(target) {

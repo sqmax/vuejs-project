@@ -44,14 +44,14 @@
 			'$route': 'fetchData'
 		},
 		created() {
-			this.selectedGoods = JSON.parse(window.localStorage.getItem('selectedGoods'));
-			this.seller = JSON.parse(window.localStorage.getItem('seller_pay'));
+			this.selectedGoods = JSON.parse(window.selectedGoods);
+			this.seller = JSON.parse(window.sellerPay);
 			console.log('created', this.selectedGoods, this.showHeader, this.seller);
 		},
 		methods: {
 			pay() {
 				console.log(this.name, this.phone, this.address);
-				window.localStorage.setItem('selectedGoods', '[]');
+				window.selectedGoods = '[]';
 				// 支付成功清空localstorage selectedGoods
 				window.alert('pay');
 			}

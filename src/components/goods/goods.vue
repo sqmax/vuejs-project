@@ -94,7 +94,7 @@
     created() {
       console.log('ggggg', this.goods);
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-      let selectedGoods = window.localStorage.getItem('selectedGoods');
+      let selectedGoods = window.selectedGoods;
       selectedGoods = selectedGoods ? JSON.parse(selectedGoods) : [];
       this.$http.get('/api/goods').then((response) => {
         response = response.body;
