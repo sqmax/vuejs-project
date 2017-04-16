@@ -25,13 +25,10 @@
 			return {
 				selectedGoods: [],
 				seller: {},
-				name: '',
-				phone: '',
-				address: ''
+				name: '廖',
+				phone: '188688',
+				address: '老地方'
 			};
-		},
-		beforeRouteUpdate(to, from, next) {
-			console.log('hahahahaha');
 		},
 		computed: {
 			allPay() {
@@ -46,17 +43,43 @@
 		created() {
 			this.selectedGoods = JSON.parse(window.selectedGoods);
 			this.seller = JSON.parse(window.sellerPay);
-			console.log('created', this.selectedGoods, this.showHeader, this.seller);
 		},
 		methods: {
 			pay() {
-				console.log(this.name, this.phone, this.address);
-				window.selectedGoods = '[]';
+				const goods = this.selectedGoods.map(good => {
+          return {productId: good.id, productQuantity: good.count}
+        })
+        const ERR_OK = 0;
+
+				this.$http.post("/sell/buyer/order/create",
+          {
+				  'openid': getCookie('openid'),
+          'phone': this.phone,
+          'name': this.name,
+          'address': this.address,
+          'items': JSON.stringify(goods)}, function (res) {
+				    res = res.body;
+				    if (res.code == ERR_OK) {
+//				      res.data.orderId; //TODO
+            }else {
+				      alert(res.msg);
+            }
+          }
+          );
+
+				  window.selectedGoods = '[]';
 				// 支付成功清空localstorage selectedGoods
-				window.alert('pay');
 			}
 		}
 	};
+  function getCookie(name) {
+    var arr;
+    var reg = new RegExp('(^| )' +name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg))
+      return unescape(arr[2]);
+    else
+      return null;
+  }
 </script>
 
 <style lang="less" >
@@ -65,7 +88,7 @@
 		width: 100%;
 		height: 100%;
 		background-color: #f5f5f5;
-		
+
 		.user-info {
 			margin-top: 10px;
 			background-color: #fff;
@@ -86,8 +109,8 @@
 				  outline: 0;
 				  color: #333;
 				}
-			}	
-		} 
+			}
+		}
 		.food-info {
 			background-color: #fff;
 			.avator {
@@ -121,7 +144,7 @@
 					}
 				}
 			}
-		}	 
+		}
 		.footer {
 			position: absolute;
 			bottom: 0;
@@ -141,8 +164,8 @@
 				text-align: center;
 				background-color: #56d176;
 			}
-			
-		} 
+
+		}
 	}
 
 

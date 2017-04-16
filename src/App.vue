@@ -14,7 +14,7 @@
         </div>
       </div>
     </template>
-    
+
     <router-view :seller="seller" :showHeader="showHeader"></router-view>
 
   </div>
@@ -40,7 +40,9 @@
     },
     methods: {
       changeHash() {
-        if (window.location.hash.indexOf('payment') > -1) {
+        const hash = window.location.hash;
+        if (hash.indexOf('payment') > -1
+        || hash.indexOf('order') > -1) {
           this.showHeader = false;
         } else {
           this.showHeader = true;
@@ -50,16 +52,16 @@
     created() {
       this.changeHash();
       window.addEventListener('hashchange', () => {
-        console.log('hash is change');
         this.changeHash();
       });
-      console.log('haha', this);
-      this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
-        response = response.body;
-        if (response.errno === ERR_OK) {
-          this.seller = Object.assign({}, this.seller, response.data);
-        }
-      });
+      if (this.showHeader) {
+        this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
+          response = response.body;
+          if (response.errno === ERR_OK) {
+            this.seller = Object.assign({}, this.seller, response.data);
+          }
+        });
+      }
     },
     components: {
       'v-header': header

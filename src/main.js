@@ -6,11 +6,15 @@ import goods from 'components/goods/goods';
 import ratings from 'components/ratings/ratings';
 import seller from 'components/seller/seller';
 import payment from 'components/payment';
+import orderList from 'components/order/list';
+import orderDetail from 'components/order/detail';
+
 
 import 'common/stylus/index.styl';
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
+Vue.http.options.emulateJSON = true;
 
 const routes = [{
   path: '/',
@@ -27,6 +31,12 @@ const routes = [{
 }, {
   path: '/payment',
   component: payment
+}, {
+  path: '/order',
+  component: orderList
+}, {
+    path: '/order/:orderid',
+    component: orderDetail
 }];
 
 const router = new VueRouter({

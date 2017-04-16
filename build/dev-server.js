@@ -31,27 +31,6 @@ apiRoutes.get('/seller', function (req, res) {
   });
 })
 
-apiRoutes.get('/goods', function (req, res) {
-  http.get('http://sell.liaoshixiong.cn/sell/buyer/product/list', function(data){
-    let rawData = '';
-    data.on('data', (chunk) => rawData += chunk);
-    data.on('end', () => {
-      try {
-        let parsedData = JSON.parse(rawData);
-        console.log(parsedData);
-        res.json({
-          errno: parsedData.code,
-          data: parsedData.data
-        })
-      } catch (e) {
-        console.log(e.message);
-      }
-    });
-  
-    
-  })
-})
-
 apiRoutes.get('/ratings', function (req, res) {
   res.json({
     errno: 0,
@@ -117,6 +96,6 @@ module.exports = app.listen(port, function (err) {
 
   // when env is testing, don't need open it
   if (process.env.NODE_ENV !== 'testing') {
-    opn(uri)
+    // opn(uri)
   }
 })

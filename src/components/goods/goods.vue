@@ -96,9 +96,9 @@
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       let selectedGoods = window.selectedGoods;
       selectedGoods = selectedGoods ? JSON.parse(selectedGoods) : [];
-      this.$http.get('/api/goods').then((response) => {
+      this.$http.get('/sell/buyer/product/list').then((response) => {
         response = response.body;
-        if (response.errno === ERR_OK) {
+        if (response.code === ERR_OK) {
           selectedGoods.map(item => {
             response.data.map((food, index) => {
               console.log(food);
