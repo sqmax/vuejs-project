@@ -51,24 +51,23 @@
         })
         const ERR_OK = 0;
 
-				this.$http.post("/sell/buyer/order/create",
-          {
+				this.$http.post("/sell/buyer/order/create", {
 				  'openid': getCookie('openid'),
           'phone': this.phone,
           'name': this.name,
           'address': this.address,
-          'items': JSON.stringify(goods)}, function (res) {
-				    res = res.body;
-				    if (res.code == ERR_OK) {
+          'items': JSON.stringify(goods)}
+          ).then((respones) => {
+            respones = respones.body;
+            if (respones.code == ERR_OK) {
               location.href = 'http://vbywcp.natappfree.cc/sell/pay/create' +
                 '?openid=' + getCookie('openid') +
-                '&orderId=' + res.data.orderId;
+                '&orderId=' + respones.data.orderId +
                 '&returnUrl=' + 'http://sell.com/#/order';
             }else {
-				      alert(res.msg);
+              alert(respones.msg);
             }
-          }
-          );
+        });
 
 				  window.selectedGoods = '[]';
 				// 支付成功清空localstorage selectedGoods
