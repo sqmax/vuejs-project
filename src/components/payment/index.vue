@@ -60,7 +60,10 @@
           'items': JSON.stringify(goods)}, function (res) {
 				    res = res.body;
 				    if (res.code == ERR_OK) {
-//				      res.data.orderId; //TODO
+              location.href = 'http://vbywcp.natappfree.cc/sell/pay/create' +
+                '?openid=' + getCookie('openid') +
+                '&orderId=' + res.data.orderId;
+                '&returnUrl=' + 'http://sell.com/#/order';
             }else {
 				      alert(res.msg);
             }
