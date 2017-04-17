@@ -20,6 +20,7 @@
 	</div>
 </template>
 <script >
+    var config = require('/config')
 	export default {
 		data() {
 			return {
@@ -47,30 +48,29 @@
 		methods: {
 			pay() {
 				const goods = this.selectedGoods.map(good => {
-          return {productId: good.id, productQuantity: good.count}
-        })
-        const ERR_OK = 0;
+                    return {productId: good.id, productQuantity: good.count}
+                });
+                const ERR_OK = 0;
+                this.$http.post("/sell/buyer/order/create", {
+                    'openid': getCookie('openid'),
+                    'phone': this.phone,
+                    'name': this.name,
+                    'address': this.address,
+                    'items': JSON.stringify(goods)}
+                ).then((respones) => {
+                    respones = respones.body;
+                    if (respones.code == ERR_OK) {
+                      location.href = config.wechatPayUrl +
+                        '?openid=' + getCookie('openid') +
+                        '&orderId=' + respones.data.orderId +
+                        '&returnUrl=' + config.sellUrl + '/#/order';
+                    }else {
+                      alert(respones.msg);
+                    }
+                });
 
-				this.$http.post("/sell/buyer/order/create", {
-				  'openid': getCookie('openid'),
-          'phone': this.phone,
-          'name': this.name,
-          'address': this.address,
-          'items': JSON.stringify(goods)}
-          ).then((respones) => {
-            respones = respones.body;
-            if (respones.code == ERR_OK) {
-              location.href = 'http://vbywcp.natappfree.cc/sell/pay/create' +
-                '?openid=' + getCookie('openid') +
-                '&orderId=' + respones.data.orderId +
-                '&returnUrl=' + 'http://sell.com/#/order';
-            }else {
-              alert(respones.msg);
-            }
-        });
-
-				  window.selectedGoods = '[]';
-				// 支付成功清空localstorage selectedGoods
+                window.selectedGoods = '[]';
+                // 支付成功清空localstorage selectedGoods
 			}
 		}
 	};

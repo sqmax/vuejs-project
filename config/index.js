@@ -28,6 +28,8 @@ module.exports = {
 		// (https://github.com/webpack/css-loader#sourcemaps)
 		// In our experience, they generally work as expected,
 		// just be aware of this issue when enabling this option.
-		cssSourceMap: false
+		cssSourceMap: false,
+		sellUrl: 'http://sell.com',
+		wechatPayUrl: 'http://vbywcp.natappfree.cc/sell/pay/create'
 	}
 }
