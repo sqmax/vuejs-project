@@ -20,7 +20,7 @@
       }
     },
     mounted() {
-      console.log(this.food);
+//      console.log(this.food);
     },
     methods: {
 

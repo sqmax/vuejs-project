@@ -21,6 +21,7 @@
 </template>
 <script >
     var config = require('config')
+    config = process.env.NODE_ENV === 'development' ? config.dev : config.build
 	export default {
 		data() {
 			return {
@@ -63,7 +64,7 @@
                       location.href = config.wechatPayUrl +
                         '?openid=' + getCookie('openid') +
                         '&orderId=' + respones.data.orderId +
-                        '&returnUrl=' + config.sellUrl + '/#/order';
+                        '&returnUrl=' + encodeURIComponent(config.sellUrl + '/#/order/' + respones.data.orderId);
                     }else {
                       alert(respones.msg);
                     }

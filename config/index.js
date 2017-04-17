@@ -30,6 +30,7 @@ module.exports = {
 		// just be aware of this issue when enabling this option.
 		cssSourceMap: false,
 		sellUrl: 'http://sell.com',
-		wechatPayUrl: 'http://vbywcp.natappfree.cc/sell/pay/create'
+		openidUrl: 'http://wx-qa.dbike.co/sell/wechat/authorize',
+		wechatPayUrl: 'http://sell.s1.natapp.cc/sell/pay/create'
 	}
 }

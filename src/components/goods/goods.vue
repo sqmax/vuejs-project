@@ -51,6 +51,8 @@
   import shopcart from 'components/shopcart/shopcart';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
   import food from 'components/food/food';
+  var config = require('config')
+  config = process.env.NODE_ENV === 'development' ? config.dev : config.build
   const ERR_OK = 0;
 
   export default {
@@ -92,7 +94,15 @@
       }
     },
     created() {
-      console.log('ggggg', this.goods);
+        //如果url里有openid, 设置进cookie
+        var openid = this.$route.query.openid;
+        if(typeof openid !== 'undefined') {
+            document.cookie = 'openid=' + openid;
+        }
+        //获取openid
+        if(getCookie('openid') == null) {
+            location.href = config.openidUrl + '?returnUrl=' +  encodeURIComponent(config.sellUrl + '/#/');
+        }
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       let selectedGoods = window.selectedGoods;
       selectedGoods = selectedGoods ? JSON.parse(selectedGoods) : [];
@@ -101,7 +111,7 @@
         if (response.code === ERR_OK) {
           selectedGoods.map(item => {
             response.data.map((food, index) => {
-              console.log(food);
+//              console.log(food);
               food.foods.map((foods, i) => {
                 // console.log(foods, item);
                 if (foods.id === item.id) {
@@ -113,7 +123,7 @@
             });
           });
           this.goods = response.data;
-          console.log('hello world', this.goods);
+//          console.log('hello world', this.goods);
           this.$nextTick(() => {
             this._initScroll();
             this._calculateHeight();
@@ -178,6 +188,15 @@
       food
     }
   };
+
+  function getCookie(name) {
+      var arr;
+      var reg = new RegExp('(^| )' +name+"=([^;]*)(;|$)");
+      if(arr=document.cookie.match(reg))
+          return unescape(arr[2]);
+      else
+          return null;
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
