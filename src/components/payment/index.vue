@@ -20,7 +20,7 @@
 	</div>
 </template>
 <script >
-    var config = require('/config')
+    var config = require('config')
 	export default {
 		data() {
 			return {
