@@ -8,7 +8,6 @@
                 </div>
                 <!---->
                 <h1 data-v-54c14e4b="" class="statustext"> 订单已取消 <img data-v-54c14e4b="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAMAAABf788oAAAAbFBMVEUAAAAzMzMzMzM2NjYzMzM1NTU0NDRAQEAzMzM0NDRAQEAzMzM0NDQzMzM0NDQ0NDQ0NDQzMzMzMzMzMzM0NDQ1NTU2NjY5OTk0NDQ0NDQzMzM0NDQzMzM0NDQ1NTU0NDQzMzM0NDQ3NzczMzMku2ijAAAAI3RSTlMA+/Yi4Do2CnhIBO/o176uopeGb2VALhsT8c/LtI2DXVVTM3zB6zwAAACGSURBVBjTfdBJEsIwDETRJHZMRkgIGZiHf/874mVbRaFdv42kzn6MCybnjAkE4JjIAFQKzQE4qez2wCuRK+S1ytZDUaqsHtpFxXXQOZWlBb+qlEWUTaXO4ZIs78Gb83R1c4PzRx8ypw0xz5JH88w95rfkB/CUXJmCJmDSP22lwZaezSH7N19vZgteSBxyaAAAAABJRU5ErkJggg==" class="arrow" /></h1>
-                <p data-v-54c14e4b="" class="helptext">系统取消了订单，理由是“超过15分钟未支付”</p>
                 <!---->
                 <div data-v-54c14e4b="" class="buttons">
                     <!---->
@@ -19,29 +18,26 @@
                 <div data-v-2fc20090="" class="head listitem">
                     <div data-v-2fc20090="" class="name-wrap">
                         <img data-v-2fc20090="" class="avatar" src="https://fuss10.elemecdn.com/2/e4/bff50bab2840cdfbffeaf13a20710png.png?imageMogr/format/webp/" />
-                        <span data-v-2fc20090="" class="name">Cinderella milktea</span>
+                        <span data-v-2fc20090="" class="name">商品信息</span>
                     </div>
                     <img data-v-2fc20090="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAMAAABf788oAAAAbFBMVEUAAAAzMzMzMzM2NjYzMzM1NTU0NDRAQEAzMzM0NDRAQEAzMzM0NDQzMzM0NDQ0NDQ0NDQzMzMzMzMzMzM0NDQ1NTU2NjY5OTk0NDQ0NDQzMzM0NDQzMzM0NDQ1NTU0NDQzMzM0NDQ3NzczMzMku2ijAAAAI3RSTlMA+/Yi4Do2CnhIBO/o176uopeGb2VALhsT8c/LtI2DXVVTM3zB6zwAAACGSURBVBjTfdBJEsIwDETRJHZMRkgIGZiHf/874mVbRaFdv42kzn6MCybnjAkE4JjIAFQKzQE4qez2wCuRK+S1ytZDUaqsHtpFxXXQOZWlBb+qlEWUTaXO4ZIs78Gb83R1c4PzRx8ypw0xz5JH88w95rfkB/CUXJmCJmDSP22lwZaezSH7N19vZgteSBxyaAAAAABJRU5ErkJggg==" class="icon-arrowright" />
                 </div>
                 <div data-v-2fc20090="" class="product-list listitem">
-                    <ul data-v-2fc20090="" class="cart-item">
+                    <ul data-v-2fc20090="" class="cart-item" v-for="orderDetail in orderDetailList">
                         <li data-v-2fc20090="" class="product-item">
                             <div data-v-2fc20090="" class="profile">
-                                <p data-v-2fc20090="" class="name">豆乳盒子</p>
+                                <p data-v-2fc20090="" class="name">{{orderDetail.productName}}</p>
                             </div>
                             <div data-v-2fc20090="" class="price-wrap">
-                                <span data-v-2fc20090="" class="quantity">x2</span>
-                                <span data-v-2fc20090="">&yen;20</span>
-                            </div></li>
+                                <span data-v-2fc20090="" class="quantity">x{{orderDetail.productQuantity}}</span>
+                                <span data-v-2fc20090="">&yen;{{orderDetail.productPrice * orderDetail.productQuantity}}</span>
+                            </div>
+                        </li>
                     </ul>
                 </div>
-                <ul data-v-2fc20090="" class="listitem">
-                    <!---->
-                    <li data-v-2fc20090="" class="product-item"><span data-v-2fc20090="" class="name">配送费</span><span data-v-2fc20090="">&yen;4</span></li>
-                </ul>
                 <!---->
                 <div data-v-2fc20090="" class="finalprice listitem">
-                    实付 &yen;44
+                    实付 &yen;{{order.orderAmount}}
                 </div>
             </div>
             <div data-v-e08ad408="" class="detailcard" data-v-c54e58ac="">
@@ -54,11 +50,10 @@
                         <li data-v-e08ad408="" class="listitem"><span data-v-e08ad408="">送达时间：</span> 尽快送达 </li>
                         <li data-v-e08ad408="" class="listitem"><span data-v-e08ad408="">送货地址：</span>
                             <div data-v-e08ad408="" class="content">
-                                <p data-v-e08ad408="">廖 先生</p>
-                                <p data-v-e08ad408="">13148395437</p>
-                                <p data-v-e08ad408="">仓溢绿苑仓前镇海曙路58-3-901</p>
+                                <p data-v-e08ad408="">{{order.buyerName}}</p>
+                                <p data-v-e08ad408="">{{order.buyerPhone}}</p>
+                                <p data-v-e08ad408="">{{order.buyerAddress}}</p>
                             </div></li>
-                        <li data-v-e08ad408="" class="listitem"><span data-v-e08ad408="">配送方式：</span>商家配送 </li>
                         <!---->
                     </ul>
                 </div>
@@ -67,9 +62,9 @@
                         订单信息
                     </div>
                     <ul data-v-e08ad408="" class="cardlist">
-                        <li data-v-e08ad408="" class="listitem"><span data-v-e08ad408="">订单号：</span>1203677136707017735 </li>
-                        <li data-v-e08ad408="" class="listitem"><span data-v-e08ad408="">支付方式：</span>在线支付 </li>
-                        <li data-v-e08ad408="" class="listitem"><span data-v-e08ad408="">下单时间：</span>2017-03-20 15:36 </li>
+                        <li data-v-e08ad408="" class="listitem"><span data-v-e08ad408="">订单号：</span>{{order.orderId}} </li>
+                        <li data-v-e08ad408="" class="listitem"><span data-v-e08ad408="">支付方式：</span>{{order.payType | payName}} </li>
+                        <li data-v-e08ad408="" class="listitem"><span data-v-e08ad408="">下单时间：</span>{{order.createTime | time}} </li>
                     </ul>
                 </div>
             </div>
@@ -81,14 +76,46 @@
     export default {
         data() {
            return {
-               order: {}
+               order: {},
+               orderDetailList: []
            }
         },
-        create() {
-            this.$http.get().then(function (response) {
-                console.log(response.body)
+        created() {
+            this.$http.get('/sell/buyer/order/detail', {
+                params: {
+                    orderId: this.$route.params.orderId,
+                    openid: getCookie('openid')
+                }
+            }).then(function (response) {
+                this.order = response.body.data;
+                this.orderDetailList = this.order.orderDetailList;
             })
+        },
+        filters: {
+            payName: function (value) {
+                if (value == 0) {
+                    return '货到付款'
+                }else {
+                    return '微信支付'
+                }
+            },
+            time: function (value) {
+                var date = new Date(value * 1000);
+                return date.getFullYear() + '-'
+                    + (date.getMonth() + 1) + '-'
+                    + date.getDate() + ' '
+                    + date.getHours() + ':'
+                    + date.getMinutes();
+            }
         }
+    }
+    function getCookie(name) {
+        var arr;
+        var reg = new RegExp('(^| )' +name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
     }
 </script>
 

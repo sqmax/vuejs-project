@@ -35,7 +35,7 @@ const routes = [{
   path: '/order',
   component: orderList
 }, {
-    path: '/order/:orderid',
+    path: '/order/:orderId',
     component: orderDetail
 }];
 
@@ -50,3 +50,4 @@ window.bvue = new Vue({
   router,
   render: h => h(App)
 });
+
