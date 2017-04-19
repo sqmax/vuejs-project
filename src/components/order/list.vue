@@ -48,7 +48,7 @@
       };
     },
     created() {
-      this.$http.get('/sell/buyer/order/list', {params: {'openid': getCookie('openid') || '18eu2jwk2kse3r42e2e'}}).then((response) => {
+      this.$http.get('/sell/buyer/order/list', {params: {'openid': getCookie('openid')}}).then((response) => {
         response = response.body;
         if (response.code === ERR_OK) {
             this.orderList =  response.data;
