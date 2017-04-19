@@ -101,7 +101,7 @@
         }
         //获取openid
         if(getCookie('openid') == null) {
-            location.href = config.openidUrl + '?returnUrl=' +  encodeURIComponent(config.sellUrl + '/#/');
+             location.href = config.openidUrl + '?returnUrl=' +  encodeURIComponent(config.sellUrl + '/#/');
         }
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       let selectedGoods = window.selectedGoods;
