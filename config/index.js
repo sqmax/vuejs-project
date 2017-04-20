@@ -16,9 +16,9 @@ module.exports = {
 		productionGzip: false,
 		productionGzipExtensions: ['js', 'css'],
 		port: 9000,
-        sellUrl: 'http://sell.liaoshixiong.com',
+        sellUrl: 'http://sell.liaoshixiong.cn',
         openidUrl: 'http://wx-qa.dbike.co/sell/wechat/authorize',
-        wechatPayUrl: 'http://sell.s1.natapp.cc/sell/pay/create'
+        wechatPayUrl: 'http://sell.liaoshixiong.cn/sell/pay/create'
 	},
 	dev: {
 		env: require('./dev.env'),

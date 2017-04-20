@@ -27,9 +27,9 @@
 			return {
 				selectedGoods: [],
 				seller: {},
-				name: '',
-				phone: '',
-				address: ''
+				name: '师兄',
+				phone: '18868877111',
+				address: '慕课网大楼'
 			};
 		},
 		computed: {

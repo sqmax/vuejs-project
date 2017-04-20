@@ -79,7 +79,7 @@
       };
     },
     created() {
-      this.$http.get('/api/ratings').then((response) => {
+      this.$http.get('/sell/api/ratings.json').then((response) => {
         response = response.body;
         if (response.errno === ERR_OK) {
           this.ratings = response.data;

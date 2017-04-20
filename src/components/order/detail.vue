@@ -10,7 +10,7 @@
                 <!--<img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAMAAABf788oAAAAbFBMVEUAAAAzMzMzMzM2NjYzMzM1NTU0NDRAQEAzMzM0NDRAQEAzMzM0NDQzMzM0NDQ0NDQ0NDQzMzMzMzMzMzM0NDQ1NTU2NjY5OTk0NDQ0NDQzMzM0NDQzMzM0NDQ1NTU0NDQzMzM0NDQ3NzczMzMku2ijAAAAI3RSTlMA+/Yi4Do2CnhIBO/o176uopeGb2VALhsT8c/LtI2DXVVTM3zB6zwAAACGSURBVBjTfdBJEsIwDETRJHZMRkgIGZiHf/874mVbRaFdv42kzn6MCybnjAkE4JjIAFQKzQE4qez2wCuRK+S1ytZDUaqsHtpFxXXQOZWlBb+qlEWUTaXO4ZIs78Gb83R1c4PzRx8ypw0xz5JH88w95rfkB/CUXJmCJmDSP22lwZaezSH7N19vZgteSBxyaAAAAABJRU5ErkJggg==" class="arrow" />-->
                 <!---->
                 <div  class="buttons">
-                    <button v-if="order.orderStatus == 0 && order.payStatus == 0">去支付</button>
+                    <button v-if="order.orderStatus == 0 && order.payStatus == 0" @click="pay(order.orderId)">去支付</button>
                     <button v-if="order.orderStatus == 0" @click="cancelOrder(order.orderId)">{{cancelOrderName}}</button>
                 </div>
             </div>
@@ -72,6 +72,8 @@
 </template>
 
 <script>
+    var config = require('config')
+    config = process.env.NODE_ENV === 'development' ? config.dev : config.build
     export default {
         data() {
            return {
@@ -139,6 +141,12 @@
                         alert('取消订单失败:' + response.msg)
                     }
                 });
+            },
+            pay: function (orderId) {
+                location.href = config.wechatPayUrl +
+                    '?openid=' + getCookie('openid') +
+                    '&orderId=' + orderId +
+                    '&returnUrl=' + encodeURIComponent(config.sellUrl + '/#/order/' + orderId);
             }
         }
     }
