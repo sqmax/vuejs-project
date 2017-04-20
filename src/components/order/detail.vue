@@ -1,17 +1,17 @@
 <template>
     <div id="detail">
-        <div >
             <div  class="statushead" >
                 <div  class="statuscircle" style="transform: scale(1); opacity: 1;">
                     <img  class="circleimage" src="https://fuss10.elemecdn.com/2/e4/bff50bab2840cdfbffeaf13a20710png.png?imageMogr/format/webp/" />
                     <!---->
                 </div>
                 <!---->
-                <h1  class="statustext"> 订单已取消 <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAMAAABf788oAAAAbFBMVEUAAAAzMzMzMzM2NjYzMzM1NTU0NDRAQEAzMzM0NDRAQEAzMzM0NDQzMzM0NDQ0NDQ0NDQzMzMzMzMzMzM0NDQ1NTU2NjY5OTk0NDQ0NDQzMzM0NDQzMzM0NDQ1NTU0NDQzMzM0NDQ3NzczMzMku2ijAAAAI3RSTlMA+/Yi4Do2CnhIBO/o176uopeGb2VALhsT8c/LtI2DXVVTM3zB6zwAAACGSURBVBjTfdBJEsIwDETRJHZMRkgIGZiHf/874mVbRaFdv42kzn6MCybnjAkE4JjIAFQKzQE4qez2wCuRK+S1ytZDUaqsHtpFxXXQOZWlBb+qlEWUTaXO4ZIs78Gb83R1c4PzRx8ypw0xz5JH88w95rfkB/CUXJmCJmDSP22lwZaezSH7N19vZgteSBxyaAAAAABJRU5ErkJggg==" class="arrow" /></h1>
+                <h1  class="statustext"> {{order.orderStatus | orderStatusName}} </h1>
+                <!--<img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAMAAABf788oAAAAbFBMVEUAAAAzMzMzMzM2NjYzMzM1NTU0NDRAQEAzMzM0NDRAQEAzMzM0NDQzMzM0NDQ0NDQ0NDQzMzMzMzMzMzM0NDQ1NTU2NjY5OTk0NDQ0NDQzMzM0NDQzMzM0NDQ1NTU0NDQzMzM0NDQ3NzczMzMku2ijAAAAI3RSTlMA+/Yi4Do2CnhIBO/o176uopeGb2VALhsT8c/LtI2DXVVTM3zB6zwAAACGSURBVBjTfdBJEsIwDETRJHZMRkgIGZiHf/874mVbRaFdv42kzn6MCybnjAkE4JjIAFQKzQE4qez2wCuRK+S1ytZDUaqsHtpFxXXQOZWlBb+qlEWUTaXO4ZIs78Gb83R1c4PzRx8ypw0xz5JH88w95rfkB/CUXJmCJmDSP22lwZaezSH7N19vZgteSBxyaAAAAABJRU5ErkJggg==" class="arrow" />-->
                 <!---->
                 <div  class="buttons">
-                    <!---->
-                    <!---->
+                    <button v-if="order.orderStatus == 0 && order.payStatus == 0">去支付</button>
+                    <button v-if="order.orderStatus == 0" @click="cancelOrder(order.orderId)">{{cancelOrderName}}</button>
                 </div>
             </div>
             <div  class="restaurant-card" >
@@ -20,7 +20,7 @@
                         <img  class="avatar" src="https://fuss10.elemecdn.com/2/e4/bff50bab2840cdfbffeaf13a20710png.png?imageMogr/format/webp/" />
                         <span  class="name">商品信息</span>
                     </div>
-                    <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAMAAABf788oAAAAbFBMVEUAAAAzMzMzMzM2NjYzMzM1NTU0NDRAQEAzMzM0NDRAQEAzMzM0NDQzMzM0NDQ0NDQ0NDQzMzMzMzMzMzM0NDQ1NTU2NjY5OTk0NDQ0NDQzMzM0NDQzMzM0NDQ1NTU0NDQzMzM0NDQ3NzczMzMku2ijAAAAI3RSTlMA+/Yi4Do2CnhIBO/o176uopeGb2VALhsT8c/LtI2DXVVTM3zB6zwAAACGSURBVBjTfdBJEsIwDETRJHZMRkgIGZiHf/874mVbRaFdv42kzn6MCybnjAkE4JjIAFQKzQE4qez2wCuRK+S1ytZDUaqsHtpFxXXQOZWlBb+qlEWUTaXO4ZIs78Gb83R1c4PzRx8ypw0xz5JH88w95rfkB/CUXJmCJmDSP22lwZaezSH7N19vZgteSBxyaAAAAABJRU5ErkJggg==" class="icon-arrowright" />
+                    <!--<img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAMAAABf788oAAAAbFBMVEUAAAAzMzMzMzM2NjYzMzM1NTU0NDRAQEAzMzM0NDRAQEAzMzM0NDQzMzM0NDQ0NDQ0NDQzMzMzMzMzMzM0NDQ1NTU2NjY5OTk0NDQ0NDQzMzM0NDQzMzM0NDQ1NTU0NDQzMzM0NDQ3NzczMzMku2ijAAAAI3RSTlMA+/Yi4Do2CnhIBO/o176uopeGb2VALhsT8c/LtI2DXVVTM3zB6zwAAACGSURBVBjTfdBJEsIwDETRJHZMRkgIGZiHf/874mVbRaFdv42kzn6MCybnjAkE4JjIAFQKzQE4qez2wCuRK+S1ytZDUaqsHtpFxXXQOZWlBb+qlEWUTaXO4ZIs78Gb83R1c4PzRx8ypw0xz5JH88w95rfkB/CUXJmCJmDSP22lwZaezSH7N19vZgteSBxyaAAAAABJRU5ErkJggg==" class="icon-arrowright" />-->
                 </div>
                 <div  class="product-list listitem">
                     <ul  class="cart-item" v-for="orderDetail in orderDetailList">
@@ -68,7 +68,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
     </div>
 </template>
 
@@ -77,7 +76,8 @@
         data() {
            return {
                order: {},
-               orderDetailList: []
+               orderDetailList: [],
+               cancelOrderName: '取消订单'
            }
         },
         created() {
@@ -106,6 +106,39 @@
                     + date.getDate() + ' '
                     + date.getHours() + ':'
                     + date.getMinutes();
+            },
+            /**
+             * 待接单: orderStatus = 0
+             * 订单已完结: orderStatus = 1
+             * 订单已取消: orderStatus = 2
+             * @param value
+             */
+            orderStatusName: function (value) {
+                if (value == 0) {
+                    return '待接单'
+                }else if (value == 1) {
+                    return '订单已完结'
+                }else if (value == 2){
+                    return '订单已取消'
+                }else {
+                    return ''
+                }
+            }
+        },
+        methods: {
+            cancelOrder: function (orderId) {
+                this.cancelOrderName = '取消中...'
+                this.$http.post('/sell/buyer/order/cancel', {
+                    orderId: orderId,
+                    openid: getCookie('openid')
+                }).then(function (response) {
+                    response = response.body
+                    if (response.code == 0) {
+                        location.reload()
+                    }else {
+                        alert('取消订单失败:' + response.msg)
+                    }
+                });
             }
         }
     }
@@ -151,6 +184,17 @@
           width: 8px;
         }
       }
+        .buttons button {
+            height: 1.853333rem;
+            width: 4.8rem;
+            white-space: nowrap;
+            border-radius: .08rem;
+            font-size: 0.8rem;
+            color: #666;
+            margin: .4rem .133333rem 0;
+            border: 1px solid #ccc;
+            background-color: transparent;
+        }
     }
     .restaurant-card {
       margin-bottom: 10px;

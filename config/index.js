@@ -15,7 +15,10 @@ module.exports = {
 		// npm install --save-dev compression-webpack-plugin
 		productionGzip: false,
 		productionGzipExtensions: ['js', 'css'],
-		port: 9000
+		port: 9000,
+        sellUrl: 'http://sell.liaoshixiong.com',
+        openidUrl: 'http://wx-qa.dbike.co/sell/wechat/authorize',
+        wechatPayUrl: 'http://sell.s1.natapp.cc/sell/pay/create'
 	},
 	dev: {
 		env: require('./dev.env'),
