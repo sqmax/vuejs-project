@@ -97,7 +97,9 @@
         //如果url里有openid, 设置进cookie
         var openid = this.$route.query.openid;
         if(typeof openid !== 'undefined') {
-            document.cookie = 'openid=' + openid;
+	    var exp = new Date();
+            exp.setTime(exp.getTime() + 3600 * 1000);//过期时间60分钟
+            document.cookie = 'openid=' + openid + ";expires=" + exp.toGMTString();
         }
         //获取openid
         if(getCookie('openid') == null) {
